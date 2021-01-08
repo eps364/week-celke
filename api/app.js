@@ -22,6 +22,20 @@ app.get('/', async (req, res) => {
     res.send("Semana Imersão Celke - 2021")
 });
 
+app.get('/metas', async (req, res) => {
+    await Meta.find({}).then((metas) => {
+        return res.json({
+            error: false,
+            metas
+        });
+    }).catch((err) => {
+        return res.status(400).json({
+            error: true,
+            message: "Nenhum resgistro encontrado!"
+        });
+    });
+});
+
 app.listen(process.env.PORT, () => {
     console.log(`Servidor iniciado na porta ${process.env.PORT} : http://localhost:${process.env.PORT}`);
 });
