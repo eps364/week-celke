@@ -36,6 +36,29 @@ app.get('/metas', async (req, res) => {
     });
 });
 
+app.post('/metas', async (req, res) => {
+
+    await sleep(3000);
+
+    function sleep(ms){
+        return new Promise((resolve) => {
+            setTimeout(resolve, ms);
+        });
+    }
+
+    await Meta.create(req.body, (err) => {
+        if (err) return res.status(400).json({
+            error: true,
+            message: "Erro: Meta não cadastrada com sucesso!"
+        });
+    });
+
+    return res.json({
+        error: false,
+        message: "Meta cadastrada com sucesso!"
+    });
+});
+
 app.listen(process.env.PORT, () => {
     console.log(`Servidor iniciado na porta ${process.env.PORT} : http://localhost:${process.env.PORT}`);
 });
